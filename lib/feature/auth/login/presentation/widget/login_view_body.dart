@@ -5,6 +5,7 @@ import 'package:hungry_app/core/constants/app_image.dart';
 import 'package:hungry_app/core/widgets/custom_button.dart';
 import 'package:hungry_app/core/widgets/custom_text_filed.dart';
 import 'package:hungry_app/feature/auth/login/presentation/widget/do_not_have_an_account.dart';
+import 'package:hungry_app/feature/home/presentation/home_view.dart';
 
 class LoginViewBody extends StatelessWidget {
   LoginViewBody({super.key});
@@ -44,7 +45,7 @@ class LoginViewBody extends StatelessWidget {
                 text: "Login",
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    print('Login');
+                    Navigator.pushReplacementNamed(context, HomeView.routeName);
                   }
                 },
               ),
