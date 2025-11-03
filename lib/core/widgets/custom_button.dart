@@ -1,17 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({
-    super.key,
-    this.onTap ,
-  });
-  final void Function()? onTap ;
+  const CustomButton({super.key, this.onTap , required this.text});
+  final void Function()? onTap;
+  final String text; 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap ,
+      onTap: onTap,
       child: Container(
         width: double.infinity,
         height: 50,
@@ -21,7 +18,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            "Login",
+            text,
             style: TextStyle(
               color: AppColors.primaryColor,
               fontSize: 20,

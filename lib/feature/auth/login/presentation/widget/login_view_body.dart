@@ -41,6 +41,7 @@ class LoginViewBody extends StatelessWidget {
               ),
               SizedBox(height: 16),
               CustomButton(
+                text: "Login",
                 onTap: () {
                   if (formKey.currentState!.validate()) {
                     print('Login');
