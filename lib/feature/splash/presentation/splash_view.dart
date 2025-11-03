@@ -7,6 +7,12 @@ class SplashView extends StatelessWidget {
   static const routeName = '/splash_view';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: AppColors.primaryColor, body: const SplashViewBody());
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: AppColors.primaryColor,
+        body: const SplashViewBody(),
+      ),
+    );
   }
 }
