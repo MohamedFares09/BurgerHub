@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hungry_app/core/constants/app_image.dart';
 import 'package:hungry_app/core/widgets/custom_button.dart';
 import 'package:hungry_app/core/widgets/custom_text_filed.dart';
+import 'package:hungry_app/feature/auth/login/presentation/widget/do_not_have_an_account.dart';
 
 class LoginViewBody extends StatelessWidget {
   LoginViewBody({super.key});
@@ -47,21 +48,7 @@ class LoginViewBody extends StatelessWidget {
                 },
               ),
               SizedBox(height: 30),
-              Row(
-                children: [
-                  Text(
-                    "Do Not Have An Account ? ",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    "Register",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
+              DoNoHaveAnAccount(),
             ],
           ),
         ),
