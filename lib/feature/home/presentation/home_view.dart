@@ -6,9 +6,11 @@ class HomeView extends StatelessWidget {
   static const routeName = 'homeview';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: HomeViewBody(),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(body: HomeViewBody()),
     );
-    
   }
 }
