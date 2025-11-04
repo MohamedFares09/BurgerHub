@@ -3,6 +3,7 @@ import 'package:hungry_app/feature/auth/login/presentation/login_view.dart';
 import 'package:hungry_app/feature/auth/register/presentation/registe_view.dart';
 import 'package:hungry_app/feature/home/presentation/home_view.dart';
 import 'package:hungry_app/feature/splash/presentation/splash_view.dart';
+import 'package:hungry_app/root.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -12,6 +13,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const LoginView());
     case RegisteView.routeName:
       return MaterialPageRoute(builder: (context) => RegisteView());
+    case Root.routeName:
+      return MaterialPageRoute(builder: (context) => const Root());
     case HomeView.routeName:
       return MaterialPageRoute(builder: (context) => const HomeView());
     default:
