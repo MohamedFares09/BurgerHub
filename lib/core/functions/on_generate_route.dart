@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hungry_app/feature/auth/login/presentation/login_view.dart';
 import 'package:hungry_app/feature/auth/register/presentation/registe_view.dart';
 import 'package:hungry_app/feature/home/presentation/home_view.dart';
+import 'package:hungry_app/feature/product/presentation/product_datails_view.dart';
 import 'package:hungry_app/feature/splash/presentation/splash_view.dart';
 import 'package:hungry_app/root.dart';
 
@@ -17,6 +18,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const Root());
     case HomeView.routeName:
       return MaterialPageRoute(builder: (context) => const HomeView());
+    case ProductDatailsView.routeName:
+      return MaterialPageRoute(
+        builder: (context) => const ProductDatailsView(),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
