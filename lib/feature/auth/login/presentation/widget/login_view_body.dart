@@ -9,51 +9,62 @@ import 'package:hungry_app/root.dart';
 
 class LoginViewBody extends StatelessWidget {
   LoginViewBody({super.key});
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            SizedBox(height: 100),
-            SvgPicture.asset(Assets.svgTextSplashImage),
-            SizedBox(height: 20),
-            Text(
-              "Welcome Back to Hungry App",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+    return SafeArea(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 100),
+                SvgPicture.asset(Assets.svgTextSplashImage),
+                const SizedBox(height: 20),
+                const Text(
+                  "Welcome Back to Hungry App",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 100),
+                CustomTextFiled(
+                  hintText: 'Email',
+                  controller: emailController,
+                ),
+                const SizedBox(height: 20),
+                CustomTextFiled(
+                  obscureText: true,
+                  hintText: 'Password',
+                  controller: passwordController,
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
+                  text: "Login",
+                  backGroundColor: Colors.white,
+                  color: AppColors.primaryColor,
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
+                      Navigator.pushReplacementNamed(context, Root.routeName);
+                    }
+                  },
+                  width: double.infinity,
+                ),
+                const SizedBox(height: 30),
+                const DoNoHaveAnAccount(),
+              ],
             ),
-            SizedBox(height: 100),
-            CustomTextFiled(hintText: 'Email', controller: emailController),
-            SizedBox(height: 20),
-            CustomTextFiled(
-              obscureText: true,
-              hintText: 'Password',
-              controller: passwordController,
-            ),
-            SizedBox(height: 16),
-            CustomButton(
-              text: "Login",
-              backGroundColor: Colors.white,
-              color: AppColors.primaryColor,
-              onTap: () {
-                if (formKey.currentState!.validate()) {
-                  Navigator.pushReplacementNamed(context, Root.routeName);
-                }
-              },
-              width: double.infinity,
-            ),
-            SizedBox(height: 30),
-            DoNoHaveAnAccount(),
-          ],
+          ),
         ),
       ),
     );

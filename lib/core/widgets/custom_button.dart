@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
     required this.color,
     required this.backGroundColor,
     this.padding = const EdgeInsets.all(8),
+    this.borderRadius,
   });
   final void Function()? onTap;
   final String text;
@@ -16,15 +17,16 @@ class CustomButton extends StatelessWidget {
   final Color color;
   final Color backGroundColor;
   final EdgeInsetsGeometry padding;
+  final BorderRadiusGeometry? borderRadius;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
         width: width,
-        height: 50,
+        //height: 50,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: borderRadius ?? BorderRadius.circular(8),
           color: backGroundColor,
         ),
         child: Padding(

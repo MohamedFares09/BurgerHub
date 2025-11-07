@@ -6,6 +6,11 @@ class CartView extends StatelessWidget {
   static const routeName = 'cart view';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: CartViewBody());
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.arrow_back),
+      ),
+      body: CartViewBody(),
+    );
   }
 }

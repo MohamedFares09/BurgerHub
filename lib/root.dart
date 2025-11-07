@@ -69,7 +69,11 @@ class _RootState extends State<Root> {
           ],
         ),
       ),
-      body: PageView(controller: controller, children: views),
+      body: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: controller,
+        children: views,
+      ),
     );
   }
 }
