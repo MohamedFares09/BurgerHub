@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hungry_app/feature/cart/presentation/widget/cart_item_card.dart';
-import 'package:hungry_app/feature/product/presentation/widget/price_section.dart';
 
 class CartViewBody extends StatelessWidget {
   const CartViewBody({super.key});
@@ -8,6 +7,7 @@ class CartViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      
       child: Column(
         children: [
           ListView.builder(
@@ -18,7 +18,7 @@ class CartViewBody extends StatelessWidget {
               return const CartItemCard();
             },
           ),
-          PriceSection(price: 80, nameButton: 'Checkout'),
+          
         ],
       ),
     );

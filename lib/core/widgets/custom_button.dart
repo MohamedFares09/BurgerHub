@@ -10,10 +10,12 @@ class CustomButton extends StatelessWidget {
     required this.backGroundColor,
     this.padding = const EdgeInsets.all(8),
     this.borderRadius,
+    this.height,
   });
   final void Function()? onTap;
   final String text;
   final double? width;
+  final double? height;
   final Color color;
   final Color backGroundColor;
   final EdgeInsetsGeometry padding;
@@ -24,7 +26,8 @@ class CustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width,
-        //height: 50,
+
+        height: height,
         decoration: BoxDecoration(
           borderRadius: borderRadius ?? BorderRadius.circular(8),
           color: backGroundColor,

@@ -3,8 +3,8 @@ import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/core/widgets/custom_button.dart';
 
 class PriceSection extends StatelessWidget {
-  const PriceSection({super.key,  this.nameButton, required this.price});
-  final String ? nameButton;
+  const PriceSection({super.key, this.nameButton, required this.price});
+  final String? nameButton;
   final double price;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,8 @@ class PriceSection extends StatelessWidget {
           ),
           Spacer(),
           CustomButton(
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 13),
+            height: 50,
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 40, vertical: 2),
             text: nameButton ?? 'Add To Card',
             color: Colors.white,
             backGroundColor: AppColors.primaryColor,
