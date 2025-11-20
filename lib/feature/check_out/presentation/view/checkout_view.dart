@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hungry_app/core/constants/app_colors.dart';
+import 'package:hungry_app/core/constants/app_styles.dart';
+import 'package:hungry_app/core/widgets/custom_button.dart';
 import 'package:hungry_app/feature/check_out/presentation/widget/checkout_view_body.dart';
+import 'package:hungry_app/feature/product/presentation/widget/price_section.dart';
+import 'package:hungry_app/root.dart';
 
 class CheckoutView extends StatelessWidget {
   const CheckoutView({super.key});
@@ -15,7 +20,66 @@ class CheckoutView extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
         ),
       ),
-      body: CheckoutViewBody(),
+      body: SafeArea(child: CheckoutViewBody()),
+      bottomSheet: Container(
+        height: 120,
+        child: PriceSection(
+          price: 80,
+          nameButton: 'Pay Now',
+          onTap: () {
+            return showDialog(
+              context: context,
+              builder: (context) {
+                return Dialog(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 50,
+                      horizontal: 20,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircleAvatar(
+                          radius: 45,
+                          backgroundColor: AppColors.primaryColor,
+                          child: Image.asset(
+                            'assets/images/ckeckout.png',
+                            width: 36,
+                            height: 23,
+                          ),
+                        ),
+                        Text('Success !', style: AppStyles.bold30),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 60),
+                          child: Text(
+                            'Your payment was successful.A receipt for this purchase has been sent to your email.',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        CustomButton(
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                              context,
+                              Root.routeName,
+                            );
+                          },
+                          height: 60,
+                          text: "Go Back",
+                          color: Colors.white,
+                          backGroundColor: AppColors.primaryColor,
+                          width: 200,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }
