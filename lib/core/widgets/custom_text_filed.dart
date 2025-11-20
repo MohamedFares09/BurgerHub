@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hungry_app/core/constants/app_colors.dart';
 
 class CustomTextFiled extends StatefulWidget {
   const CustomTextFiled({
@@ -44,6 +45,7 @@ class _CustomTextFiledState extends State<CustomTextFiled> {
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: AppColors.primaryColor,
                 ),
                 onPressed: () {
                   setState(() {

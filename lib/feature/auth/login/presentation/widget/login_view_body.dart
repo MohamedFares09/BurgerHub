@@ -16,56 +16,74 @@ class LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 100),
-                SvgPicture.asset(Assets.svgTextSplashImage),
-                const SizedBox(height: 20),
-                const Text(
-                  "Welcome Back to Hungry App",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 100),
-                CustomTextFiled(
-                  hintText: 'Email',
-                  controller: emailController,
-                ),
-                const SizedBox(height: 20),
-                CustomTextFiled(
-                  obscureText: true,
-                  hintText: 'Password',
-                  controller: passwordController,
-                ),
-                const SizedBox(height: 16),
-                CustomButton(
-                  text: "Login",
-                  backGroundColor: Colors.white,
-                  color: AppColors.primaryColor,
-                  onTap: () {
-                    if (formKey.currentState!.validate()) {
-                      Navigator.pushReplacementNamed(context, Root.routeName);
-                    }
-                  },
-                  width: double.infinity,
-                ),
-                const SizedBox(height: 30),
-                const DoNoHaveAnAccount(),
-              ],
+    return Form(
+      key: formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 250),
+          SvgPicture.asset(
+            Assets.svgTextSplashImage,
+            color: AppColors.primaryColor,
+          ),
+          SizedBox(height: 10),
+          const Text(
+            "Welcome Back to Hungry App",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryColor,
             ),
           ),
-        ),
+          SizedBox(height: 100),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 100),
+                    CustomTextFiled(
+                      hintText: 'Email',
+                      controller: emailController,
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextFiled(
+                      obscureText: true,
+                      hintText: 'Password',
+                      controller: passwordController,
+                    ),
+                    const SizedBox(height: 16),
+                    CustomButton(
+                      text: "Login",
+                      backGroundColor: Colors.white,
+                      color: AppColors.primaryColor,
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Root.routeName,
+                          );
+                        }
+                      },
+                      width: double.infinity,
+                    ),
+                    const SizedBox(height: 30),
+                    const DoNoHaveAnAccount(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

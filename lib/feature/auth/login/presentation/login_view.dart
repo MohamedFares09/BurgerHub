@@ -9,11 +9,11 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
-      resizeToAvoidBottomInset: true, // مهم لتجنب انكماش الواجهة مع الكيبورد
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       body: GestureDetector(
         onTap: () {
-          // هتقفل الكيبورد فقط لو المستخدم ضغط في أي مكان فاضي
+        
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: LoginViewBody(),
