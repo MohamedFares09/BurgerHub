@@ -5,7 +5,19 @@ import 'package:hungry_app/core/networking/errors/exception.dart';
 class DioConsumer extends ApiConsumer {
   final Dio dio;
 
-  DioConsumer(this.dio);
+  DioConsumer(this.dio) {
+    dio.options.baseUrl = 'https://sonic-zdi0.onrender.com/api';
+    dio.interceptors.add(
+      LogInterceptor(
+        request: true,
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+        responseBody: true,
+        error: true,
+      ),
+    );
+  }
   @override
   Future delete(
     String path, {
@@ -47,11 +59,12 @@ class DioConsumer extends ApiConsumer {
     String path, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
+    bool isFormData = false,
   }) async {
     try {
       final response = await dio.post(
         path,
-        data: data,
+        data: isFormData ? FormData.fromMap(data!) : data,
         queryParameters: queryParameters,
       );
       return response.data;
