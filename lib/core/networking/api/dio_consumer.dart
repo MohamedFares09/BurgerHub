@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:hungry_app/core/networking/api/api_consumer.dart';
-import 'package:hungry_app/core/networking/errors/error_model.dart';
 import 'package:hungry_app/core/networking/errors/exception.dart';
 
 class DioConsumer extends ApiConsumer {
@@ -21,64 +20,7 @@ class DioConsumer extends ApiConsumer {
       );
       return response.data;
     } on DioException catch (e) {
-      switch (e.type) {
-        case DioExceptionType.connectionTimeout:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-        case DioExceptionType.sendTimeout:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-        case DioExceptionType.receiveTimeout:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-        case DioExceptionType.badCertificate:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-        case DioExceptionType.cancel:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-        case DioExceptionType.connectionError:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-        case DioExceptionType.unknown:
-          throw ServerException(
-            errorModel: ErrorModel.fromJson(e.response!.data),
-          );
-
-        case DioExceptionType.badResponse:
-          switch (e.response!.statusCode) {
-            case 400:
-              throw ServerException(
-                errorModel: ErrorModel.fromJson(e.response!.data),
-              );
-            case 401:
-              throw ServerException(
-                errorModel: ErrorModel.fromJson(e.response!.data),
-              );
-            case 403:
-              throw ServerException(
-                errorModel: ErrorModel.fromJson(e.response!.data),
-              );
-            case 404:
-              throw ServerException(
-                errorModel: ErrorModel.fromJson(e.response!.data),
-              );
-            case 500:
-              throw ServerException(
-                errorModel: ErrorModel.fromJson(e.response!.data),
-              );
-            default:
-              throw ServerException(
-                errorModel: ErrorModel.fromJson(e.response!.data),
-              );
-          }
-      }
+      handelDioException(e);
     }
   }
 
@@ -87,8 +29,17 @@ class DioConsumer extends ApiConsumer {
     String path, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
-  }) {
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await dio.get(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handelDioException(e);
+    }
   }
 
   @override
@@ -96,8 +47,17 @@ class DioConsumer extends ApiConsumer {
     String path, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
-  }) {
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handelDioException(e);
+    }
   }
 
   @override
@@ -105,7 +65,16 @@ class DioConsumer extends ApiConsumer {
     String path, {
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters,
-  }) {
-    throw UnimplementedError();
+  }) async {
+    try {
+      final response = await dio.put(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      handelDioException(e);
+    }
   }
 }
