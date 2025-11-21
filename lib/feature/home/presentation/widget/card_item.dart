@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/feature/product/presentation/product_datails_view.dart';
 
 class CardItem extends StatelessWidget {
