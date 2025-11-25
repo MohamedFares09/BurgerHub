@@ -3,4 +3,5 @@ class EndPoints {
   static String login = '/login';
   static String register = '/register';
   static String profile = '/profile';
+  static String home = '/products';
 }
