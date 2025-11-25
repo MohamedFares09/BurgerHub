@@ -4,4 +4,5 @@ import 'package:hungry_app/feature/home/doman/entities/home_entity.dart';
 
 abstract class ProductRepo {
   Future<Either<Faliuer, List<HomeEntity>>> getProducts();
+  Future<Either<Faliuer, HomeEntity>> getProductWithId(int id);
 }
