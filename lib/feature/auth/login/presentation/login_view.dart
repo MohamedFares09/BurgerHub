@@ -7,6 +7,7 @@ import 'package:hungry_app/feature/auth/login/data/repos/auth_repository_impl.da
 import 'package:hungry_app/feature/auth/login/domain/usecaces/user_usecases.dart';
 import 'package:hungry_app/feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:hungry_app/feature/auth/login/presentation/widget/login_view_body.dart';
+import 'package:hungry_app/main.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -28,6 +29,7 @@ class LoginView extends StatelessWidget {
                 remoteDataSource: AuthRemoteDataSourceImpl(
                   api: DioConsumer(Dio()),
                 ),
+                cacheHelper: cacheHelper,
               ),
             ),
           ),

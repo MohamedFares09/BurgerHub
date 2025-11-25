@@ -18,7 +18,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     result.fold(
       (failure) => emit(LoginError(error: failure.message)),
-      (user) => emit(LoginSuccess()),
+      (user) => emit(LoginSuccess(user: user)),
     );
   }
 }

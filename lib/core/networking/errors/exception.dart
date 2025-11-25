@@ -7,10 +7,13 @@ class ServerException implements Exception {
 }
 
 void handelDioException(DioException e) {
+  if (e.response == null) {
+    throw ServerException(errorModel: ErrorModel(message: 'No internet connection'));
+  }
   switch (e.type) {
     case DioExceptionType.connectionTimeout:
       throw ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
-    case DioExceptionType.sendTimeout:
+    case DioExceptionType.sendTimeout:  
       throw ServerException(errorModel: ErrorModel.fromJson(e.response!.data));
     case DioExceptionType.receiveTimeout:
       throw ServerException(errorModel: ErrorModel.fromJson(e.response!.data));

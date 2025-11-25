@@ -8,6 +8,7 @@ import 'package:hungry_app/core/widgets/custom_text_filed.dart';
 import 'package:hungry_app/feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:hungry_app/feature/auth/login/presentation/cubit/login_state.dart';
 import 'package:hungry_app/feature/auth/login/presentation/widget/do_not_have_an_account.dart';
+import 'package:hungry_app/root.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});
@@ -21,6 +22,7 @@ class LoginViewBody extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(const SnackBar(content: Text("Login Successfully")));
+          Navigator.pushNamed(context, Root.routeName);
         }
         if (state is LoginError) {
           ScaffoldMessenger.of(
@@ -88,7 +90,7 @@ class LoginViewBody extends StatelessWidget {
                                 onTap: () {
                                   if (cubit.formKey.currentState!.validate()) {
                                     cubit.login();
-                                  } 
+                                  }
                                 },
                                 width: double.infinity,
                               );
