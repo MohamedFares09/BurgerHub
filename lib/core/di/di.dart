@@ -6,7 +6,9 @@ import 'package:hungry_app/feature/home/data/data_sources/home_remote_data_sourc
 import 'package:hungry_app/feature/home/data/repos/home_reposotory_impl.dart';
 import 'package:hungry_app/feature/home/doman/repo/product_repo.dart';
 import 'package:hungry_app/feature/home/doman/usecases/home_usecases.dart';
+import 'package:hungry_app/feature/home/doman/usecases/product_with_id_use_cases.dart';
 import 'package:hungry_app/feature/home/presentation/cubit/product_cubit.dart';
+import 'package:hungry_app/feature/home/presentation/cubit/product_details_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -23,18 +25,29 @@ void setupServiceLocator() {
   );
 
   // Home Feature - Repositories
-  getIt.registerLazySingleton<HomeRepo>(
+  getIt.registerLazySingleton<ProductRepo>(
     () =>
         HomeReposotoryImpl(homeRemoteDataSource: getIt<HomeRemoteDataSource>()),
   );
 
   // Home Feature - Use Cases
   getIt.registerLazySingleton<HomeUsecases>(
-    () => HomeUsecases(homeRepo: getIt<HomeRepo>()),
+    () => HomeUsecases(productRepo: getIt<ProductRepo>()),
+  );
+
+  getIt.registerLazySingleton<ProductWithIdUseCases>(
+    () => ProductWithIdUseCases(productRepo: getIt<ProductRepo>()),
   );
 
   // Home Feature - Cubit (Factory - new instance each time)
   getIt.registerFactory<ProductCubit>(
     () => ProductCubit(getIt<HomeUsecases>()),
+  );
+
+  getIt.registerFactory<ProductDetailsCubit>(
+    () => ProductDetailsCubit(
+      getIt<ProductWithIdUseCases>(),
+      getIt<HomeRemoteDataSource>(),
+    ),
   );
 }

@@ -19,9 +19,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const Root());
     case HomeView.routeName:
       return MaterialPageRoute(builder: (context) => const HomeView());
-    case ProductDatailsView.routeName:
+    case ProductDetailsView.routeName:
       return MaterialPageRoute(
-        builder: (context) => const ProductDatailsView(),
+        builder: (context) => const ProductDetailsView(productId: 1,),
       );
     case CheckoutView.routeName:
       return MaterialPageRoute(builder: (context) => const CheckoutView());
