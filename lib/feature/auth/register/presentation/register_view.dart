@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hungry_app/core/networking/api/dio_consumer.dart';
+import 'package:hungry_app/core/di/di.dart';
+import 'package:hungry_app/core/networking/api/api_consumer.dart';
 import 'package:hungry_app/feature/auth/register/data/datasources/register_remote_data_source.dart';
 import 'package:hungry_app/feature/auth/register/data/repos/register_repository_impl.dart';
 import 'package:hungry_app/feature/auth/register/domain/usecaces/register_usecase.dart';
@@ -24,7 +24,7 @@ class RegisterView extends StatelessWidget {
             RegisterUseCase(
               registerRepo: RegisterRepositoryImpl(
                 remoteDataSource: RegisterRemoteDataSourceImpl(
-                  api: DioConsumer(Dio()),
+                  api: getIt<ApiConsumer>(),
                 ),
               ),
             ),

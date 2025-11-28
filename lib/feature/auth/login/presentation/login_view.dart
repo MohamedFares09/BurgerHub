@@ -1,13 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hungry_app/core/networking/api/dio_consumer.dart';
+import 'package:hungry_app/core/cache/cache_helper.dart';
+import 'package:hungry_app/core/di/di.dart';
+import 'package:hungry_app/core/networking/api/api_consumer.dart';
 import 'package:hungry_app/feature/auth/login/data/datasources/auth_remote_data_source.dart';
 import 'package:hungry_app/feature/auth/login/data/repos/auth_repository_impl.dart';
 import 'package:hungry_app/feature/auth/login/domain/usecaces/user_usecases.dart';
 import 'package:hungry_app/feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:hungry_app/feature/auth/login/presentation/widget/login_view_body.dart';
-import 'package:hungry_app/main.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -27,9 +27,9 @@ class LoginView extends StatelessWidget {
             LoginUseCase(
               userRepo: AuthRepositoryImpl(
                 remoteDataSource: AuthRemoteDataSourceImpl(
-                  api: DioConsumer(Dio()),
+                  api: getIt<ApiConsumer>(),
                 ),
-                cacheHelper: cacheHelper,
+                cacheHelper: getIt<CacheHelper>(),
               ),
             ),
           ),
