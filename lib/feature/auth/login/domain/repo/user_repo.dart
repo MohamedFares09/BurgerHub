@@ -7,4 +7,5 @@ abstract class UserRepo {
     required String email,
     required String password,
   });
+  Future<Either<Faliuer, void>> logout();
 }
