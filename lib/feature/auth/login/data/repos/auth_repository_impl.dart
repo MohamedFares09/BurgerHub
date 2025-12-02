@@ -39,4 +39,15 @@ class AuthRepositoryImpl implements UserRepo {
       return Left(Faliuer(message: e.errorModel.message ?? "Unknown Error"));
     }
   }
+
+  @override
+  Future<Either<Faliuer, void>> logout() async {
+    try {
+      await remoteDataSource.logout();
+      await cacheHelper.clearUserData();
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(Faliuer(message: e.errorModel.message ?? "Unknown Error"));
+    }
+  }
 }
