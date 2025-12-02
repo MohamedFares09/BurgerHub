@@ -4,6 +4,11 @@ import 'package:hungry_app/core/cache/cache_helper.dart';
 import 'package:hungry_app/core/networking/api/api_consumer.dart';
 import 'package:hungry_app/core/networking/api/api_interceptor.dart';
 import 'package:hungry_app/core/networking/api/dio_consumer.dart';
+import 'package:hungry_app/feature/auth/login/data/datasources/auth_remote_data_source.dart';
+import 'package:hungry_app/feature/auth/login/data/repos/auth_repository_impl.dart';
+import 'package:hungry_app/feature/auth/login/domain/repo/user_repo.dart';
+import 'package:hungry_app/feature/auth/login/domain/usecases/logout_usecase.dart';
+import 'package:hungry_app/feature/auth/login/presentation/cubit/logout_cubit.dart';
 import 'package:hungry_app/feature/home/data/data_sources/home_remote_data_sources.dart';
 import 'package:hungry_app/feature/home/data/repos/home_reposotory_impl.dart';
 import 'package:hungry_app/feature/home/doman/repo/product_repo.dart';
@@ -74,6 +79,29 @@ Future<void> setupServiceLocator() async {
       getIt<ProductWithIdUseCases>(),
       getIt<HomeRemoteDataSource>(),
     ),
+  );
+
+  // Auth Feature - Data Sources
+  getIt.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(api: getIt<ApiConsumer>()),
+  );
+
+  // Auth Feature - Repositories
+  getIt.registerLazySingleton<UserRepo>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: getIt<AuthRemoteDataSource>(),
+      cacheHelper: getIt<CacheHelper>(),
+    ),
+  );
+
+  // Auth Feature - Use Cases
+  getIt.registerLazySingleton<LogoutUseCase>(
+    () => LogoutUseCase(userRepo: getIt<UserRepo>()),
+  );
+
+  // Auth Feature - Cubit (Factory - new instance each time)
+  getIt.registerFactory<LogoutCubit>(
+    () => LogoutCubit(logoutUseCase: getIt<LogoutUseCase>()),
   );
 
   // Profile Feature - Data Sources

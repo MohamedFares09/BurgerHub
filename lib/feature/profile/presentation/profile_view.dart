@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/core/di/di.dart';
+import 'package:hungry_app/feature/auth/login/presentation/cubit/logout_cubit.dart';
 import 'package:hungry_app/feature/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hungry_app/feature/profile/presentation/widget/profile_view_body.dart';
 
@@ -11,8 +12,13 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ProfileCubit>()..getUserProfile(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<ProfileCubit>()..getUserProfile(),
+        ),
+        BlocProvider(create: (context) => getIt<LogoutCubit>()),
+      ],
       child: Scaffold(
         backgroundColor: AppColors.primaryColor,
         appBar: AppBar(

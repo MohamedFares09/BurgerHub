@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hungry_app/feature/auth/login/presentation/cubit/logout_cubit.dart';
+import 'package:hungry_app/feature/auth/login/presentation/cubit/logout_state.dart';
+import 'package:hungry_app/feature/auth/login/presentation/login_view.dart';
 import 'package:hungry_app/feature/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hungry_app/feature/profile/presentation/cubit/profile_state.dart';
 import 'package:hungry_app/feature/profile/presentation/widget/profile_action_button.dart';
@@ -105,83 +108,104 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
     });
   }
 
+  void _handleLogout() {
+    context.read<LogoutCubit>().logout();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProfileCubit, ProfileState>(
-      listener: (context, state) {
-        if (state is ProfileError) {
-          _showErrorSnackBar(state.message);
-        } else if (state is ProfileSuccess) {
-          _handleProfileSuccess(state);
-        } else if (state is ProfileUpdateSuccess) {
-          _handleProfileUpdateSuccess(state);
-        } else if (state is ProfileUpdateError) {
-          _showErrorSnackBar(state.message);
-        }
-      },
-      builder: (context, state) {
-        if (state is ProfileLoading) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.white,
-              strokeWidth: 3,
-            ),
-          );
-        }
-
-        final isUpdating = state is ProfileUpdating;
-
-        return SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              ProfileImage(
-                imageUrl: state is ProfileSuccess ? state.user.image : null,
-                selectedImage: selectedImage,
-                isEditable: isEditMode,
-                onImageSelected: (image) {
-                  setState(() {
-                    selectedImage = image;
-                  });
-                },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ProfileCubit, ProfileState>(
+          listener: (context, state) {
+            if (state is ProfileError) {
+              _showErrorSnackBar(state.message);
+            } else if (state is ProfileSuccess) {
+              _handleProfileSuccess(state);
+            } else if (state is ProfileUpdateSuccess) {
+              _handleProfileUpdateSuccess(state);
+            } else if (state is ProfileUpdateError) {
+              _showErrorSnackBar(state.message);
+            }
+          },
+        ),
+        BlocListener<LogoutCubit, LogoutState>(
+          listener: (context, state) {
+            if (state is LogoutSuccess) {
+              Navigator.of(
+                context,
+              ).pushNamedAndRemoveUntil(LoginView.routeName, (route) => false);
+            } else if (state is LogoutError) {
+              _showErrorSnackBar(state.message);
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 3,
               ),
-              SizedBox(height: 16),
-              if (state is ProfileSuccess && !isEditMode)
-                ProfileHeader(name: state.user.name, email: state.user.email),
-              SizedBox(height: 40),
+            );
+          }
 
-              if (isEditMode) ...[
-                ProfileSectionTitle(title: 'Edit Profile Information'),
-                SizedBox(height: 16),
-                ProfileEditForm(
-                  nameController: nameController,
-                  emailController: emailController,
-                  isUpdating: isUpdating,
-                  onCancel: _toggleEditMode,
-                  onSave: _saveProfile,
-                ),
-              ] else ...[
-                ProfileActionButton(
-                  icon: Icons.edit_outlined,
-                  title: 'Edit Profile',
-                  onTap: _toggleEditMode,
-                ),
-                SizedBox(height: 12),
-                ProfileActionButton(
-                  icon: Icons.logout,
-                  title: 'Log Out',
-                  color: Colors.red.shade400,
-                  onTap: () {
-                    
+          final isUpdating = state is ProfileUpdating;
+          final isLoggingOut =
+              context.watch<LogoutCubit>().state is LogoutLoading;
+
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                SizedBox(height: 10),
+                ProfileImage(
+                  imageUrl: state is ProfileSuccess ? state.user.image : null,
+                  selectedImage: selectedImage,
+                  isEditable: isEditMode,
+                  onImageSelected: (image) {
+                    setState(() {
+                      selectedImage = image;
+                    });
                   },
                 ),
+                SizedBox(height: 16),
+                if (state is ProfileSuccess && !isEditMode)
+                  ProfileHeader(name: state.user.name, email: state.user.email),
+                SizedBox(height: 40),
+
+                if (isEditMode) ...[
+                  ProfileSectionTitle(title: 'Edit Profile Information'),
+                  SizedBox(height: 16),
+                  ProfileEditForm(
+                    nameController: nameController,
+                    emailController: emailController,
+                    isUpdating: isUpdating,
+                    onCancel: _toggleEditMode,
+                    onSave: _saveProfile,
+                  ),
+                ] else ...[
+                  ProfileActionButton(
+                    icon: Icons.edit_outlined,
+                    title: 'Edit Profile',
+                    onTap: _toggleEditMode,
+                  ),
+                  SizedBox(height: 12),
+                  ProfileActionButton(
+                    icon: Icons.logout,
+                    title: isLoggingOut ? 'Logging out...' : 'Log Out',
+                    color: Colors.red.shade400,
+                    onTap: isLoggingOut ? null : _handleLogout,
+                  ),
+                ],
+                SizedBox(height: 20),
               ],
-              SizedBox(height: 20),
-            ],
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }

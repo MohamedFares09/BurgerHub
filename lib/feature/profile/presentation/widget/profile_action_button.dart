@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ProfileActionButton extends StatelessWidget {
   final IconData icon;
   final String title;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final Color? color;
 
   const ProfileActionButton({
