@@ -15,10 +15,17 @@ class CartResponseModel {
         [];
 
     // حساب السعر الإجمالي من مجموع أسعار الـ items
-    final calculatedTotal = items.fold<double>(
-      0.0,
-      (sum, item) => sum + item.totalItemPrice,
-    );
+    print('=== Calculating Total Price ===');
+    print('Number of items: ${items.length}');
+
+    final calculatedTotal = items.fold<double>(0.0, (sum, item) {
+      print(
+        'Item: ${item.product.title}, Price: ${item.product.price}, Qty: ${item.quantity}, Total: ${item.totalItemPrice}',
+      );
+      return sum + item.totalItemPrice;
+    });
+
+    print('Calculated Total: $calculatedTotal');
 
     return CartResponseModel(items: items, totalPrice: calculatedTotal);
   }
@@ -71,10 +78,10 @@ class CartItemResponseModel {
     );
   }
 
-  // حساب السعر الإجمالي للـ item
+  // حساب السعر الإجمالي للـ item (سعر الوحدة × الكمية)
   double get totalItemPrice {
-    final basePrice = double.tryParse(product.price) ?? 0.0;
-    return basePrice * quantity;
+    final unitPrice = double.tryParse(product.price) ?? 0.0;
+    return unitPrice * quantity;
   }
 
   static double _parseDouble(dynamic value) {

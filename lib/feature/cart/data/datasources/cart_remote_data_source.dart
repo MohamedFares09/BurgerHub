@@ -21,6 +21,8 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
   @override
   Future<CartResponseModel> getCart() async {
     final response = await api.get(EndPoints.getCart);
+    print('=== Cart API Response ===');
+    print(response['data']);
     return CartResponseModel.fromJson(response['data']);
   }
 }
