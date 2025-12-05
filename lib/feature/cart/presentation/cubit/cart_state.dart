@@ -27,3 +27,15 @@ class CartFetchError extends CartState {
   final String message;
   CartFetchError({required this.message});
 }
+
+class CartRemoveLoading extends CartState {}
+
+class CartRemoveSuccess extends CartState {
+  final String message;
+  CartRemoveSuccess({this.message = 'Item removed successfully!'});
+}
+
+class CartRemoveError extends CartState {
+  final String message;
+  CartRemoveError({required this.message});
+}
