@@ -13,6 +13,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   final TextEditingController passwordController = TextEditingController();
 
   void register() async {
+    if (isClosed) return;
     emit(RegisterLoading());
     final result = await registerUseCase(
       name: nameController.text,
@@ -20,9 +21,19 @@ class RegisterCubit extends Cubit<RegisterState> {
       password: passwordController.text,
     );
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(RegisterError(error: failure.message)),
-      (user) => emit(RegisterSuccess()),
+      (failure) {
+        if (!isClosed) {
+          emit(RegisterError(error: failure.message));
+        }
+      },
+      (user) {
+        if (!isClosed) {
+          emit(RegisterSuccess());
+        }
+      },
     );
   }
 }

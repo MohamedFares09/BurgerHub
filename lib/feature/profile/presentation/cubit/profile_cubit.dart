@@ -11,13 +11,24 @@ class ProfileCubit extends Cubit<ProfileState> {
     : super(ProfileInitial());
 
   Future<void> getUserProfile() async {
+    if (isClosed) return;
     emit(ProfileLoading());
 
     final result = await getUserProfileUseCase.call();
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(ProfileError(message: failure.message)),
-      (user) => emit(ProfileSuccess(user: user)),
+      (failure) {
+        if (!isClosed) {
+          emit(ProfileError(message: failure.message));
+        }
+      },
+      (user) {
+        if (!isClosed) {
+          emit(ProfileSuccess(user: user));
+        }
+      },
     );
   }
 
@@ -26,6 +37,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     required String email,
     String? imagePath,
   }) async {
+    if (isClosed) return;
     emit(ProfileUpdating());
 
     final result = await updateUserProfileUseCase.call(
@@ -34,9 +46,19 @@ class ProfileCubit extends Cubit<ProfileState> {
       imagePath: imagePath,
     );
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(ProfileUpdateError(message: failure.message)),
-      (user) => emit(ProfileUpdateSuccess(user: user)),
+      (failure) {
+        if (!isClosed) {
+          emit(ProfileUpdateError(message: failure.message));
+        }
+      },
+      (user) {
+        if (!isClosed) {
+          emit(ProfileUpdateSuccess(user: user));
+        }
+      },
     );
   }
 }

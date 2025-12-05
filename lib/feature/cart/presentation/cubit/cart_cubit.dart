@@ -12,25 +12,47 @@ class CartCubit extends Cubit<CartState> {
     : super(CartInitial());
 
   Future<void> addToCart(CartItemModel cartItem) async {
+    if (isClosed) return;
     emit(CartLoading());
 
     final request = AddToCartRequest(items: [cartItem]);
     final result = await addToCartUseCase(request);
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(CartError(message: failure.message)),
-      (_) => emit(CartAddSuccess()),
+      (failure) {
+        if (!isClosed) {
+          emit(CartError(message: failure.message));
+        }
+      },
+      (_) {
+        if (!isClosed) {
+          emit(CartAddSuccess());
+        }
+      },
     );
   }
 
   Future<void> getCart() async {
+    if (isClosed) return;
     emit(CartFetchLoading());
 
     final result = await getCartUseCase();
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(CartFetchError(message: failure.message)),
-      (cartModel) => emit(CartFetchSuccess(cartModel: cartModel)),
+      (failure) {
+        if (!isClosed) {
+          emit(CartFetchError(message: failure.message));
+        }
+      },
+      (cartModel) {
+        if (!isClosed) {
+          emit(CartFetchSuccess(cartModel: cartModel));
+        }
+      },
     );
   }
 }

@@ -8,13 +8,24 @@ class LogoutCubit extends Cubit<LogoutState> {
   LogoutCubit({required this.logoutUseCase}) : super(LogoutInitial());
 
   Future<void> logout() async {
+    if (isClosed) return;
     emit(LogoutLoading());
 
     final result = await logoutUseCase();
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(LogoutError(message: failure.message)),
-      (_) => emit(LogoutSuccess()),
+      (failure) {
+        if (!isClosed) {
+          emit(LogoutError(message: failure.message));
+        }
+      },
+      (_) {
+        if (!isClosed) {
+          emit(LogoutSuccess());
+        }
+      },
     );
   }
 }

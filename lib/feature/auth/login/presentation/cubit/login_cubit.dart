@@ -10,15 +10,26 @@ class LoginCubit extends Cubit<LoginState> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   void login() async {
+    if (isClosed) return;
     emit(LoginLoading());
     final result = await loginUseCase(
       email: emailController.text,
       password: passwordController.text,
     );
 
+    if (isClosed) return;
+
     result.fold(
-      (failure) => emit(LoginError(error: failure.message)),
-      (user) => emit(LoginSuccess(user: user)),
+      (failure) {
+        if (!isClosed) {
+          emit(LoginError(error: failure.message));
+        }
+      },
+      (user) {
+        if (!isClosed) {
+          emit(LoginSuccess(user: user));
+        }
+      },
     );
   }
 }
