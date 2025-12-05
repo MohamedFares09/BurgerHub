@@ -4,6 +4,7 @@ import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/feature/cart/presentation/cubit/cart_cubit.dart';
 import 'package:hungry_app/feature/cart/presentation/cubit/cart_state.dart';
 import 'package:hungry_app/feature/cart/presentation/widget/cart_item_widget.dart';
+import 'package:hungry_app/feature/check_out/presentation/view/checkout_view.dart';
 
 class CartViewBody extends StatelessWidget {
   const CartViewBody({super.key});
@@ -38,7 +39,16 @@ class CartViewBody extends StatelessWidget {
             return Center(child: Text(state.message));
           } else if (state is CartFetchSuccess) {
             if (state.cartModel.items.isEmpty) {
-              return const Center(child: Text('Your cart is empty'));
+              return const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.shopping_cart_outlined, size: 75),
+                    SizedBox(height: 16),
+                    Text('Your cart is empty', style: TextStyle(fontSize: 20)),
+                  ],
+                ),
+              );
             }
             return Column(
               children: [
@@ -93,7 +103,13 @@ class CartViewBody extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              CheckoutView.routeName,
+                              arguments: state.cartModel.totalPrice,
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
                             shape: RoundedRectangleBorder(

@@ -25,7 +25,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
         builder: (context) => const ProductDetailsView(productId: 1),
       );
     case CheckoutView.routeName:
-      return MaterialPageRoute(builder: (context) => const CheckoutView());
+      final totalPrice = settings.arguments as double? ?? 0.0;
+      return MaterialPageRoute(
+        builder: (context) => CheckoutView(totalPrice: totalPrice),
+      );
     case CartView.routeName:
       return MaterialPageRoute(builder: (context) => const CartView());
     default:
