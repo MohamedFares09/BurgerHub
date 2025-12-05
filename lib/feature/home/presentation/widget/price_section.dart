@@ -12,11 +12,13 @@ class PriceSection extends StatelessWidget {
     required this.price,
     this.onTap,
     this.showLoadingFromCart = false,
+    this.isLoading = false,
   });
   final String? nameButton;
   final String price;
   final Function()? onTap;
   final bool showLoadingFromCart;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +44,11 @@ class PriceSection extends StatelessWidget {
           showLoadingFromCart
               ? BlocBuilder<CartCubit, CartState>(
                   builder: (context, state) {
-                    final isLoading = state is CartLoading;
-                    return _buildButton(isLoading);
+                    final isCartLoading = state is CartLoading;
+                    return _buildButton(isCartLoading);
                   },
                 )
-              : _buildButton(false),
+              : _buildButton(isLoading),
         ],
       ),
     );

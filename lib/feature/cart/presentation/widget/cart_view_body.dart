@@ -107,7 +107,10 @@ class CartViewBody extends StatelessWidget {
                             Navigator.pushNamed(
                               context,
                               CheckoutView.routeName,
-                              arguments: state.cartModel.totalPrice,
+                              arguments: {
+                                'totalPrice': state.cartModel.totalPrice,
+                                'cartItems': state.cartModel.items,
+                              },
                             );
                           },
                           style: ElevatedButton.styleFrom(

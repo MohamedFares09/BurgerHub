@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hungry_app/feature/auth/login/presentation/login_view.dart';
 import 'package:hungry_app/feature/auth/register/presentation/register_view.dart';
+import 'package:hungry_app/feature/cart/data/models/cart_response_model.dart';
 import 'package:hungry_app/feature/cart/presentation/cart_view.dart';
 import 'package:hungry_app/feature/check_out/presentation/view/checkout_view.dart';
 import 'package:hungry_app/feature/home/presentation/home_view.dart';
@@ -25,9 +26,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
         builder: (context) => const ProductDetailsView(productId: 1),
       );
     case CheckoutView.routeName:
-      final totalPrice = settings.arguments as double? ?? 0.0;
+      final args = settings.arguments as Map<String, dynamic>;
+      final totalPrice = args['totalPrice'] as double;
+      final cartItems = args['cartItems'] as List<CartItemResponseModel>;
       return MaterialPageRoute(
-        builder: (context) => CheckoutView(totalPrice: totalPrice),
+        builder: (context) =>
+            CheckoutView(totalPrice: totalPrice, cartItems: cartItems),
       );
     case CartView.routeName:
       return MaterialPageRoute(builder: (context) => const CartView());
