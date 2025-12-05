@@ -38,7 +38,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     return Column(
       children: [
         SizedBox(height: 300),
-        Center(child: SvgPicture.asset(Assets.svgTextSplashImage)),
+        Center(child: Text('BurgerHub', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
         Spacer(),
         Image.asset('assets/images/splash_image.png'),
       ],

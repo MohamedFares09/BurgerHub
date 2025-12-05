@@ -12,10 +12,18 @@ class HeaderHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset(
-          Assets.svgTextSplashImage,
-          // ignore: deprecated_member_use
-          color: AppColors.primaryColor,
+        // SvgPicture.asset(
+        //   Assets.svgTextSplashImage,
+        //   // ignore: deprecated_member_use
+        //   color: AppColors.primaryColor,
+        // ),
+        Text(
+          'BurgerHub',
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primaryColor,
+          ),
         ),
         Spacer(),
         CircleAvatar(

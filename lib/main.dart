@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/core/di/di.dart';
@@ -11,11 +12,11 @@ void main() async {
 
   await setupServiceLocator();
 
-  runApp(const HungryApp());
+  runApp(const BurgerHub());
 }
 
-class HungryApp extends StatelessWidget {
-  const HungryApp({super.key});
+class BurgerHub extends StatelessWidget {
+  const BurgerHub({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,8 @@ class HungryApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.primaryColor,
         scaffoldBackgroundColor: AppColors.backgroundColor,
-        fontFamily: 'Inter', // أو الخط المستخدم حالياً
+        fontFamily: GoogleFonts.cairo().fontFamily,
+        textTheme: GoogleFonts.cairoTextTheme(),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.backgroundColor,
           elevation: 0,
