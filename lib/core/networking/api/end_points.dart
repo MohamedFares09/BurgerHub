@@ -14,4 +14,5 @@ class EndPoints {
   static String addOrRemoveFavorite = '/toggle-favorite';
   static String getUserFavorite = '/favorites';
   static String saveOrder = '/orders';
+  static String getOrders = '/orders';
 }

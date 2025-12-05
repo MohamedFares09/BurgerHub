@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/feature/cart/presentation/cart_view.dart';
 import 'package:hungry_app/feature/home/presentation/home_view.dart';
-import 'package:hungry_app/feature/order_history/presentation/order_history_view.dart';
+import 'package:hungry_app/feature/order_history/presentation/view/order_history_view.dart';
 import 'package:hungry_app/feature/profile/presentation/profile_view.dart';
 
 class Root extends StatefulWidget {
