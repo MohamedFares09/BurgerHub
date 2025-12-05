@@ -2,14 +2,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hungry_app/feature/cart/data/models/cart_item_model.dart';
 import 'package:hungry_app/feature/cart/domain/usecases/add_to_cart_usecase.dart';
 import 'package:hungry_app/feature/cart/domain/usecases/get_cart_usecase.dart';
+import 'package:hungry_app/feature/cart/domain/usecases/remove_from_cart_usecase.dart';
 import 'package:hungry_app/feature/cart/presentation/cubit/cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   final AddToCartUseCase addToCartUseCase;
   final GetCartUseCase getCartUseCase;
+  final RemoveFromCartUseCase removeFromCartUseCase;
 
-  CartCubit({required this.addToCartUseCase, required this.getCartUseCase})
-    : super(CartInitial());
+  CartCubit({
+    required this.addToCartUseCase,
+    required this.getCartUseCase,
+    required this.removeFromCartUseCase,
+  }) : super(CartInitial());
 
   Future<void> addToCart(CartItemModel cartItem) async {
     if (isClosed) return;
@@ -51,6 +56,30 @@ class CartCubit extends Cubit<CartState> {
       (cartModel) {
         if (!isClosed) {
           emit(CartFetchSuccess(cartModel: cartModel));
+        }
+      },
+    );
+  }
+
+  Future<void> removeFromCart(int itemId) async {
+    if (isClosed) return;
+    emit(CartRemoveLoading());
+
+    final result = await removeFromCartUseCase(itemId);
+
+    if (isClosed) return;
+
+    result.fold(
+      (failure) {
+        if (!isClosed) {
+          emit(CartRemoveError(message: failure.message));
+        }
+      },
+      (_) {
+        if (!isClosed) {
+          emit(CartRemoveSuccess());
+          // Refresh cart after successful removal
+          getCart();
         }
       },
     );
