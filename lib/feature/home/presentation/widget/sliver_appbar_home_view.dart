@@ -4,7 +4,10 @@ import 'package:hungry_app/feature/home/presentation/widget/header_home_view.dar
 import 'package:hungry_app/feature/home/presentation/widget/search_text_filed.dart';
 
 class SliverAppBarHomeView extends StatelessWidget {
-  const SliverAppBarHomeView({super.key});
+  final String? userName;
+  final String? userImage;
+
+  const SliverAppBarHomeView({super.key, this.userName, this.userImage});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +23,13 @@ class SliverAppBarHomeView extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 70),
-            const HeaderHomeView(),
+            HeaderHomeView(userImage: userImage),
             Align(
               alignment: Alignment.topLeft,
-              child: Text('Hello Rich Sonic', style: AppStyles.mediam18),
+              child: Text(
+                'Hello ${userName ?? 'Guest'}',
+                style: AppStyles.mediam18,
+              ),
             ),
             const SizedBox(height: 18),
             const SearchTextFiled(),

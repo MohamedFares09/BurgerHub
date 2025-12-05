@@ -145,6 +145,7 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton<ProfileRepo>(
     () => ProfileRepositoryImpl(
       remoteDataSource: getIt<ProfileRemoteDataSource>(),
+      cacheHelper: getIt<CacheHelper>(),
     ),
   );
 

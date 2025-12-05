@@ -14,18 +14,9 @@ class CartResponseModel {
             .toList() ??
         [];
 
-    // حساب السعر الإجمالي من مجموع أسعار الـ items
-    print('=== Calculating Total Price ===');
-    print('Number of items: ${items.length}');
-
     final calculatedTotal = items.fold<double>(0.0, (sum, item) {
-      print(
-        'Item: ${item.product.title}, Price: ${item.product.price}, Qty: ${item.quantity}, Total: ${item.totalItemPrice}',
-      );
       return sum + item.totalItemPrice;
     });
-
-    print('Calculated Total: $calculatedTotal');
 
     return CartResponseModel(items: items, totalPrice: calculatedTotal);
   }

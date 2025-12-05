@@ -7,7 +7,10 @@ import 'package:hungry_app/feature/home/presentation/widget/category_list.dart';
 import 'package:hungry_app/feature/home/presentation/widget/sliver_appbar_home_view.dart';
 
 class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({super.key});
+  final String? userName;
+  final String? userImage;
+
+  const HomeViewBody({super.key, this.userName, this.userImage});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class HomeViewBody extends StatelessWidget {
       builder: (context, state) {
         return CustomScrollView(
           slivers: [
-            SliverAppBarHomeView(),
+            SliverAppBarHomeView(userName: userName, userImage: userImage),
             SliverToBoxAdapter(
               child: Column(
                 children: [
