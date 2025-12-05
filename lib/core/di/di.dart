@@ -28,6 +28,11 @@ import 'package:hungry_app/feature/profile/data/repos/profile_repository_impl.da
 import 'package:hungry_app/feature/profile/domain/repo/profile_repo.dart';
 import 'package:hungry_app/feature/profile/domain/usecases/get_user_profile_usecase.dart';
 import 'package:hungry_app/feature/profile/domain/usecases/update_user_profile_usecase.dart';
+import 'package:hungry_app/feature/order_history/data/datasources/order_remote_data_source.dart';
+import 'package:hungry_app/feature/order_history/data/repos/order_repository_impl.dart';
+import 'package:hungry_app/feature/order_history/domain/repos/order_repo.dart';
+import 'package:hungry_app/feature/order_history/domain/usecases/create_order_usecase.dart';
+import 'package:hungry_app/feature/order_history/presentation/cubit/order_cubit.dart';
 import 'package:hungry_app/feature/profile/presentation/cubit/profile_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -104,6 +109,26 @@ Future<void> setupServiceLocator() async {
       getCartUseCase: getIt<GetCartUseCase>(),
       removeFromCartUseCase: getIt<RemoveFromCartUseCase>(),
     ),
+  );
+
+  // Order Feature - Data Sources
+  getIt.registerLazySingleton<OrderRemoteDataSource>(
+    () => OrderRemoteDataSourceImpl(api: getIt<ApiConsumer>()),
+  );
+
+  // Order Feature - Repositories
+  getIt.registerLazySingleton<OrderRepo>(
+    () => OrderRepositoryImpl(remoteDataSource: getIt<OrderRemoteDataSource>()),
+  );
+
+  // Order Feature - Use Cases
+  getIt.registerLazySingleton<CreateOrderUseCase>(
+    () => CreateOrderUseCase(orderRepo: getIt<OrderRepo>()),
+  );
+
+  // Order Feature - Cubit
+  getIt.registerFactory<OrderCubit>(
+    () => OrderCubit(createOrderUseCase: getIt<CreateOrderUseCase>()),
   );
 
   // Auth Feature - Data Sources
