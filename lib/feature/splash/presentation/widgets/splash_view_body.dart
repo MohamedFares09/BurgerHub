@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hungry_app/core/cache/cache_helper.dart';
-import 'package:hungry_app/core/constants/app_image.dart';
 import 'package:hungry_app/core/di/di.dart';
 import 'package:hungry_app/feature/auth/login/presentation/login_view.dart';
 import 'package:hungry_app/root.dart';

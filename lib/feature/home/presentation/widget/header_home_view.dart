@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:hungry_app/core/constants/app_colors.dart';
-import 'package:hungry_app/core/constants/app_image.dart';
+
 
 class HeaderHomeView extends StatelessWidget {
   final String? userImage;

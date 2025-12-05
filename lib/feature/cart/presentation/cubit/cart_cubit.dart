@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hungry_app/feature/cart/data/models/cart_item_model.dart';
+import 'package:hungry_app/feature/cart/data/models/cart_response_model.dart';
 import 'package:hungry_app/feature/cart/domain/usecases/add_to_cart_usecase.dart';
 import 'package:hungry_app/feature/cart/domain/usecases/get_cart_usecase.dart';
 import 'package:hungry_app/feature/cart/domain/usecases/remove_from_cart_usecase.dart';
@@ -41,7 +42,17 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> getCart() async {
     if (isClosed) return;
-    emit(CartFetchLoading());
+
+    CartResponseModel? currentData;
+    if (state is CartFetchSuccess) {
+      currentData = (state as CartFetchSuccess).cartModel;
+    } else if (state is CartFetchLoading) {
+      currentData = (state as CartFetchLoading).cartModel;
+    } else if (state is CartRemoveLoading) {
+      currentData = (state as CartRemoveLoading).cartModel;
+    }
+
+    emit(CartFetchLoading(cartModel: currentData));
 
     final result = await getCartUseCase();
 
@@ -50,7 +61,9 @@ class CartCubit extends Cubit<CartState> {
     result.fold(
       (failure) {
         if (!isClosed) {
-          emit(CartFetchError(message: failure.message));
+          emit(
+            CartFetchError(message: failure.message, cartModel: currentData),
+          );
         }
       },
       (cartModel) {
@@ -63,7 +76,17 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> removeFromCart(int itemId) async {
     if (isClosed) return;
-    emit(CartRemoveLoading());
+
+    CartResponseModel? currentData;
+    if (state is CartFetchSuccess) {
+      currentData = (state as CartFetchSuccess).cartModel;
+    } else if (state is CartFetchLoading) {
+      currentData = (state as CartFetchLoading).cartModel;
+    } else if (state is CartFetchError) {
+      currentData = (state as CartFetchError).cartModel;
+    }
+
+    emit(CartRemoveLoading(cartModel: currentData));
 
     final result = await removeFromCartUseCase(itemId);
 
@@ -72,7 +95,9 @@ class CartCubit extends Cubit<CartState> {
     result.fold(
       (failure) {
         if (!isClosed) {
-          emit(CartRemoveError(message: failure.message));
+          emit(
+            CartRemoveError(message: failure.message, cartModel: currentData),
+          );
         }
       },
       (_) {

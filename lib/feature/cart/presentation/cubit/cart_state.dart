@@ -16,7 +16,10 @@ class CartError extends CartState {
   CartError({required this.message});
 }
 
-class CartFetchLoading extends CartState {}
+class CartFetchLoading extends CartState {
+  final CartResponseModel? cartModel;
+  CartFetchLoading({this.cartModel});
+}
 
 class CartFetchSuccess extends CartState {
   final CartResponseModel cartModel;
@@ -25,10 +28,14 @@ class CartFetchSuccess extends CartState {
 
 class CartFetchError extends CartState {
   final String message;
-  CartFetchError({required this.message});
+  final CartResponseModel? cartModel;
+  CartFetchError({required this.message, this.cartModel});
 }
 
-class CartRemoveLoading extends CartState {}
+class CartRemoveLoading extends CartState {
+  final CartResponseModel? cartModel;
+  CartRemoveLoading({this.cartModel});
+}
 
 class CartRemoveSuccess extends CartState {
   final String message;
@@ -37,5 +44,6 @@ class CartRemoveSuccess extends CartState {
 
 class CartRemoveError extends CartState {
   final String message;
-  CartRemoveError({required this.message});
+  final CartResponseModel? cartModel;
+  CartRemoveError({required this.message, this.cartModel});
 }
