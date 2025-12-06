@@ -7,18 +7,22 @@ class DoYouHaveAnAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Do You Have An Account ? ",
-          style: TextStyle(color: Colors.white),
+          "Already have an account? ",
+          style: TextStyle(color: Color(0xFF32343E)),
         ),
         GestureDetector(
           onTap: () {
             Navigator.pushReplacementNamed(context, LoginView.routeName);
           },
           child: Text(
-            "Login in",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            "LOG IN",
+            style: TextStyle(
+              color: Color(0xFFFF7622),
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

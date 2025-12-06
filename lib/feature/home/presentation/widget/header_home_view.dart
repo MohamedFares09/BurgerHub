@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:hungry_app/core/constants/app_colors.dart';
 
-
 class HeaderHomeView extends StatelessWidget {
   final String? userImage;
 
@@ -12,17 +11,13 @@ class HeaderHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // SvgPicture.asset(
-        //   Assets.svgTextSplashImage,
-        //   // ignore: deprecated_member_use
-        //   color: AppColors.primaryColor,
-        // ),
         Text(
-          'BurgerHub',
+          'Burger Hub',
           style: TextStyle(
             fontSize: 35,
             fontWeight: FontWeight.bold,
             color: AppColors.primaryColor,
+            fontFamily: 'LuckiestGuy',
           ),
         ),
         Spacer(),

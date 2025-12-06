@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hungry_app/core/constants/app_colors.dart';
 
 import 'package:hungry_app/core/widgets/custom_text_filed.dart';
 
@@ -42,7 +43,7 @@ class ProfileEditForm extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: isUpdating ? null : onCancel,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white.withOpacity(0.2),
+                  backgroundColor: AppColors.primaryColor,
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -64,7 +65,7 @@ class ProfileEditForm extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: isUpdating ? null : onSave,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFFF7622),
+                  backgroundColor: AppColors.primaryColor,
                   padding: EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

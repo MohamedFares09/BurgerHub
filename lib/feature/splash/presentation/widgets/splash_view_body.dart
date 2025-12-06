@@ -36,7 +36,17 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     return Column(
       children: [
         SizedBox(height: 300),
-        Center(child: Text('BurgerHub', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold))),
+        Center(
+          child: Text(
+            'Burger Hub',
+            style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontFamily: 'LuckiestGuy',
+            ),
+          ),
+        ),
         Spacer(),
         Image.asset('assets/images/splash_image.png'),
       ],

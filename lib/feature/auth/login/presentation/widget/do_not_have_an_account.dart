@@ -7,18 +7,22 @@ class DoNoHaveAnAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Do Not Have An Account ? ",
-          style: TextStyle(color: Colors.white),
+          "Don't have an account? ",
+          style: TextStyle(color: Color(0xFF32343E)),
         ),
         GestureDetector(
           onTap: () {
             Navigator.pushReplacementNamed(context, RegisterView.routeName);
           },
           child: Text(
-            "Register",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            "SIGN UP",
+            style: TextStyle(
+              color: Color(0xFFFF7622),
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ],

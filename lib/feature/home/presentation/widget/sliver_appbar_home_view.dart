@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/core/constants/app_styles.dart';
 import 'package:hungry_app/feature/home/presentation/widget/header_home_view.dart';
 import 'package:hungry_app/feature/home/presentation/widget/search_text_filed.dart';
@@ -28,7 +29,7 @@ class SliverAppBarHomeView extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 'Hello ${userName ?? 'Guest'}',
-                style: AppStyles.mediam18,
+                style: AppStyles.mediam18.copyWith(color: AppColors.black),
               ),
             ),
             const SizedBox(height: 18),

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
-import 'package:hungry_app/core/constants/app_image.dart';
 import 'package:hungry_app/core/widgets/custom_button.dart';
 import 'package:hungry_app/core/widgets/custom_text_filed.dart';
+import 'package:hungry_app/feature/auth/login/presentation/login_view.dart';
 import 'package:hungry_app/feature/auth/register/presentation/cubit/register_cubit.dart';
 import 'package:hungry_app/feature/auth/register/presentation/cubit/register_state.dart';
 import 'package:hungry_app/feature/auth/register/presentation/widget/do_you_have_an_account.dart';
-import 'package:hungry_app/root.dart';
+
 
 class RegisterViewBody extends StatelessWidget {
   const RegisterViewBody({super.key});
@@ -22,7 +21,7 @@ class RegisterViewBody extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Register Successfully")),
           );
-          Navigator.pushNamed(context, Root.routeName);
+          Navigator.pushNamed(context, LoginView.routeName);
         }
         if (state is RegisterError) {
           ScaffoldMessenger.of(
@@ -31,73 +30,131 @@ class RegisterViewBody extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Form(
-          key: cubit.formKey,
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(height: 250),
-                SvgPicture.asset(
-                  Assets.svgTextSplashImage,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(height: 120),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 100),
-                            CustomTextFiled(
-                              hintText: "Enter Name",
-                              controller: cubit.nameController,
-                            ),
-                            SizedBox(height: 20),
-                            CustomTextFiled(
-                              hintText: "Enter email",
-                              controller: cubit.emailController,
-                            ),
-                            SizedBox(height: 20),
-                            CustomTextFiled(
-                              hintText: "Enter password",
-                              controller: cubit.passwordController,
-                              obscureText: true,
-                            ),
-                            SizedBox(height: 20),
-                            state is RegisterLoading
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : CustomButton(
-                                    text: 'Register',
-                                    backGroundColor: Colors.white,
-                                    color: AppColors.primaryColor,
-                                    width: double.infinity,
-                                    onTap: () {
-                                      if (cubit.formKey.currentState!
-                                          .validate()) {
-                                        cubit.register();
-                                      }
-                                    },
-                                  ),
-                            SizedBox(height: 20),
-                            DoYouHaveAnAccount(),
-                          ],
+        return Scaffold(
+          backgroundColor: AppColors.backgroundColor,
+          body: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Form(
+                  key: cubit.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Logo
+                      const Text(
+                        "Burger Hub",
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                          fontFamily: 'LuckiestGuy',
                         ),
                       ),
-                    ),
+                      const SizedBox(height: 40),
+
+                      // Welcome Text
+                      const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Please sign up to get started",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textSecondary,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 40),
+
+                      // Inputs
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Name",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          CustomTextFiled(
+                            hintText: "John Doe",
+                            controller: cubit.nameController,
+                            fillColor: Colors.white,
+                          ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          CustomTextFiled(
+                            hintText: "example@gmail.com",
+                            controller: cubit.emailController,
+                            fillColor: Colors.white,
+                          ),
+                          const SizedBox(height: 20),
+                          const Text(
+                            "Password",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          CustomTextFiled(
+                            hintText: "••••••••",
+                            controller: cubit.passwordController,
+                            obscureText: true,
+                            fillColor: Colors.white,
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // Register Button
+                      state is RegisterLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColor,
+                              ),
+                            )
+                          : CustomButton(
+                              text: 'SIGN UP',
+                              backGroundColor: AppColors.primaryColor,
+                              color: Colors.white,
+                              width: double.infinity,
+                              onTap: () {
+                                if (cubit.formKey.currentState!.validate()) {
+                                  cubit.register();
+                                }
+                              },
+                            ),
+
+                      const SizedBox(height: 30),
+
+                      // Footer
+                      DoYouHaveAnAccount(),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         );

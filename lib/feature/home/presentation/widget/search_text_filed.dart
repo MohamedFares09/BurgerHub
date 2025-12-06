@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hungry_app/feature/home/presentation/cubit/product_cubit.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
 import 'package:hungry_app/core/constants/app_styles.dart';
 
@@ -24,6 +26,9 @@ class SearchTextFiled extends StatelessWidget {
           ],
         ),
         child: TextField(
+          onChanged: (value) {
+            context.read<ProductCubit>().searchProducts(value);
+          },
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.search, color: AppColors.primaryColor),
             hintText: 'Search',

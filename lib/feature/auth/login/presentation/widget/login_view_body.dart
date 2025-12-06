@@ -22,7 +22,7 @@ class LoginViewBody extends StatelessWidget {
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(const SnackBar(content: Text("Login Successfully")));
-          Navigator.pushNamed(context, Root.routeName);
+          Navigator.pushNamedAndRemoveUntil(context, Root.routeName, (route) => false);
         }
         if (state is LoginError) {
           ScaffoldMessenger.of(
@@ -31,80 +31,122 @@ class LoginViewBody extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return Form(
-          key: cubit.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 250),
-              SvgPicture.asset(
-                Assets.svgTextSplashImage,
-                color: AppColors.primaryColor,
-              ),
-              SizedBox(height: 10),
-              const Text(
-                "Welcome Back to Hungry App",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor,
-                ),
-              ),
-              SizedBox(height: 100),
-              Expanded(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                  ),
+        return Scaffold(
+          backgroundColor: AppColors.backgroundColor,
+          body: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Form(
+                  key: cubit.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Logo,
+                      const Text(
+                        "Burger Hub",
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor,
+                          fontFamily: 'LuckiestGuy',
+                        ),
+                      ),
+                      const SizedBox(height: 40),
 
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: SingleChildScrollView(
-                      child: Column(
+                      // Welcome Text
+                      const Text(
+                        "Log In",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Please sign in to your existing account",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.textSecondary,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 40),
+
+                      // Inputs
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 100),
+                          const Text(
+                            "Email",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
                           CustomTextFiled(
-                            hintText: 'Email',
+                            hintText: 'example@gmail.com',
                             controller: cubit.emailController,
+                            fillColor: Colors.white,
                           ),
                           const SizedBox(height: 20),
+                          const Text(
+                            "Password",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
                           CustomTextFiled(
                             obscureText: true,
-                            hintText: 'Password',
+                            hintText: '••••••••',
                             controller: cubit.passwordController,
+                            fillColor: Colors.white,
                           ),
-                          const SizedBox(height: 16),
-                          BlocBuilder<LoginCubit, LoginState>(
-                            builder: (context, state) {
-                              if (state is LoginLoading) {
-                                return const CircularProgressIndicator();
-                              }
-                              return CustomButton(
-                                text: "Login",
-                                backGroundColor: Colors.white,
-                                color: AppColors.primaryColor,
-                                onTap: () {
-                                  if (cubit.formKey.currentState!.validate()) {
-                                    cubit.login();
-                                  }
-                                },
-                                width: double.infinity,
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 30),
-                          const DoNoHaveAnAccount(),
                         ],
                       ),
-                    ),
+
+                      const SizedBox(height: 30),
+
+                      // Login Button
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          if (state is LoginLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColor,
+                              ),
+                            );
+                          }
+                          return CustomButton(
+                            text: "LOG IN",
+                            backGroundColor: AppColors.primaryColor,
+                            color: Colors.white,
+                            onTap: () {
+                              if (cubit.formKey.currentState!.validate()) {
+                                cubit.login();
+                              }
+                            },
+                            width: double.infinity,
+                          );
+                        },
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // Footer
+                      const DoNoHaveAnAccount(),
+                    ],
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         );
       },
