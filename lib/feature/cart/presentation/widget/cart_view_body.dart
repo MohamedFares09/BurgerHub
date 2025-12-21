@@ -128,7 +128,7 @@ class CartViewBody extends StatelessWidget {
                                 CheckoutView.routeName,
                                 arguments: {
                                   'totalPrice': cartModel!.totalPrice,
-                                  'cartItems': cartModel!.items,
+                                  'cartItems': cartModel.items,
                                 },
                               );
                             },

@@ -18,7 +18,7 @@ class RegisterViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is RegisterSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Register Successfully")),
+            const SnackBar(content: Text("Register Successfully") ,backgroundColor: AppColors.success,),
           );
           Navigator.pushNamed(context, LoginView.routeName);
         }

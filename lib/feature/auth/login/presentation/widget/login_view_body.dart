@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:hungry_app/core/constants/app_colors.dart';
-import 'package:hungry_app/core/constants/app_image.dart';
+
 import 'package:hungry_app/core/widgets/custom_button.dart';
 import 'package:hungry_app/core/widgets/custom_text_filed.dart';
 import 'package:hungry_app/feature/auth/login/presentation/cubit/login_cubit.dart';
@@ -21,7 +21,7 @@ class LoginViewBody extends StatelessWidget {
         if (state is LoginSuccess) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(const SnackBar(content: Text("Login Successfully")));
+          ).showSnackBar(const SnackBar(content: Text("Login Successfully"),backgroundColor: AppColors.success,));
           Navigator.pushNamedAndRemoveUntil(
             context,
             Root.routeName,
